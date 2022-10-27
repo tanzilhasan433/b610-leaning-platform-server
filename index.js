@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const express = require("express");
 require("dotenv").config();
 const app = express();
@@ -35,6 +35,17 @@ async function run() {
         const result = await courses.toArray();
         res.json(result)
     });
+
+
+
+    app.get("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const Course = await Courses.findOne(query);
+      res.json(Course);
+    });
+
+
 
 
     //add a new package
